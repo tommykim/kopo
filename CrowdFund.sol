@@ -10,7 +10,6 @@ contract CrowdFund {
     uint public amountRaised;
     uint public deadline;
     uint public price;
-    token public tokenReward;
     mapping(address => uint256) public balanceOf;
     bool public fundingGoalReached = false;
     bool public crowdsaleClosed = false;
@@ -21,15 +20,11 @@ contract CrowdFund {
     function CrowdFund(
         address ifSuccessfulSendTo,
         uint fundingGoalInEthers,
-        uint durationInMinutes,
-        uint etherCostOfEachToken,
-        address addressOfTokenUsedAsReward
+        uint durationInMinutes
     ) public {
         beneficiary = ifSuccessfulSendTo;
         fundingGoal = fundingGoalInEthers * 1 ether;
         deadline = now + durationInMinutes * 1 minutes;
-        price = etherCostOfEachToken * 1 ether;
-        tokenReward = token(addressOfTokenUsedAsReward);
     }
 
 
@@ -39,7 +34,7 @@ contract CrowdFund {
         uint amount = msg.value;
         balanceOf[msg.sender] += amount;
         amountRaised += amount;
-        tokenReward.transfer(msg.sender, amount / price);
+        
         FundTransfer(msg.sender, amount, true);
     }
 
