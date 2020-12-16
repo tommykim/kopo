@@ -1,9 +1,5 @@
 pragma solidity ^0.4.25;
 
-interface token {
-    function transfer(address receiver, uint amount) public;
-}
-
 contract CrowdFund {
     address public beneficiary;
     uint public fundingGoal;
